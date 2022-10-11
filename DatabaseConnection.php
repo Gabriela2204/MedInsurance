@@ -1,18 +1,12 @@
 <?php
-
+ 
 require('Constants.php');
 
 class DatabaseConnection{
    
    private static $instance;
-   protected $dbh = null;
+   private static $dbh ;
 
-  public function __construct(){
-   
-   // $this->instance = $instance;
-   // $this->dbh = $dbh;
-
-  }
 
    public static function getInstance()
    {
@@ -21,34 +15,20 @@ class DatabaseConnection{
      try{   
  
       $dbh = new \PDO('mysql:host='.localhost.';dbname='.dbname, user, pass);
+      return $dbh;
         }catch(\Exception $e){
            echo $e->getMessage();
         }
-    
-     }else{
-        echo "already connected";
-     }
-  
-      return $dbh;
-
+      
    }
-
-   // private function query()
-   // {
-   //  if($this->dbh == null)
-   //  return "eroare";
-   //  else
-   //   return $this->dbh->query();
-   // }
-
+   else{
+      return self::$dbh;
+   }
 }
 
-// $obj = DatabaseConnection::getInstance();
-// $obj1 = DatabaseConnection::getInstance();
-// $sql = 'select * from insurers';
-// $result = $obj1->query($sql);
-// $response= $result->fetchAll();
-// print_r($response);
+  
+
+}
 
 
 ?>

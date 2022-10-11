@@ -1,20 +1,24 @@
 <?php
-   namespace Repository\Insurance;
-   use DatabaseConnection;
+   namespace Repository;
+   require('C:\xampp\htdocs\MedInsurance\autoloader.php');
+   use  DatabaseConnection;
    
-   define('ROOT', 'C:\xampp\htdocs\MedInsurance\\'); 
-   require_once(ROOT.'DatabaseConnection.php');
+//    define('ROOT', 'C:\xampp\htdocs\MedInsurance\\'); 
+//    require_once(ROOT.'DatabaseConnection.php');
+
 
    class Insurance{
 
     public function queryAndFetch($sql)
     {
         $db = DatabaseConnection::getInstance();
-        $result = $db->prepare($sql);
+        if($db != null)
+       { $result = $db->prepare($sql);
         $result -> execute();
         $response= $result->fetchAll(\PDO::FETCH_ASSOC);
+        return $response;}
 
-        return json_encode($response);
+        
     }
     public function find($id){
 
