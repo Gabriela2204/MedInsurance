@@ -1,8 +1,8 @@
 <?php
 
-namespace Entity\Insurance;
+namespace Entity;
 
-class Insurance{
+class Insurances{
         
     public  $id;
     public $id_type;

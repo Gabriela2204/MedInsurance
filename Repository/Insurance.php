@@ -1,51 +1,32 @@
 <?php
    namespace Repository;
-   require('C:\xampp\htdocs\MedInsurance\autoloader.php');
-   use  DatabaseConnection;
-   
-//    define('ROOT', 'C:\xampp\htdocs\MedInsurance\\'); 
-//    require_once(ROOT.'DatabaseConnection.php');
+   require('C:\xampp\htdocs\MedInsurance\vendor\autoload.php');
+   use Entity\Insurances as Insurances;
 
+   class Insurance extends AbstractRepository{
+    
+     use BaseRepository;
 
-   class Insurance{
-
-    public function queryAndFetch($sql)
-    {
-        $db = DatabaseConnection::getInstance();
-        if($db != null)
-       { $result = $db->prepare($sql);
-        $result -> execute();
-        $response= $result->fetchAll(\PDO::FETCH_ASSOC);
-        return $response;}
-
-        
-    }
-    public function find($id){
-
-        return $this->queryAndFetch('select * from insurances  where id='.$id);
-    }
-
-    public function findAll(){
-       return $this->queryAndFetch('select * from insurances ');
-
+    public function AllInfo(){
+          
+          return $this->queryAndFetch('select insurances.id , insurances_customer.pricing ,
+          insurances_customer.start_time, insurances_customer.status, type.name as Type, customer.name as Client from insurances
+          inner join insurances_customer on insurances.id = insurances_customer.id_insurances
+          inner join type on insurances.id_type = type.id
+          inner join customer on customer.id =  insurances_customer.id_customer ');
     }
     
-    public function insert($id, $id_type){
+     public function insert(Insurances $insurance){
         
        
-        return $this->queryAndFetch('insert into insurances(id, id_type) values ('.$id.','.$id_type.')');
+        return $this->queryAndFetch('insert into insurances(id, id_type) values ('.$insurance->getId().','.$insurance->getId_Type().')');
 
     }
 
-    public function delete($id){
-       
-        
-        return $this->queryAndFetch('delete from insurances where id='.$id);
-    }
 
-    public function update($id,$newId_type){
+    public function update(Insurances $insurance , $id){
          
-        return $this->queryAndFetch('update insurances set id_type = '.$newId_type.'where id='.$id);
+        return $this->queryAndFetch('update insurances set id_type = '.$insurance->getId().'where id='.$id);
 
     }
  

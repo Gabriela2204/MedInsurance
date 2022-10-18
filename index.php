@@ -1,23 +1,15 @@
 <?php
 
-
 namespace index;
-require_once 'autoloader.php';
-use Controller\Insurance as Insurance;
-
 
 $controllerName = $_GET['controller'];
 $action = $_GET['action'];
+require_once(__DIR__."\Controller\\".$controllerName.'.php');
 
+$class ="Controller\\$controllerName" ;
 
-// $controller  = new $controllerName();
-// $controller->$action(); 
-if($controllerName == "Insurance")
-{
-    $controller = new Insurance();
-    $controller -> $action();
-}
-
+$controller  = new $class();
+$controller->$action(); 
 
 
 ?>
