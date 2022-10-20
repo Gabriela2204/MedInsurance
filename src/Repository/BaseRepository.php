@@ -1,8 +1,7 @@
 <?php
 
-namespace Repository;
-require('C:\xampp\htdocs\MedInsurance\vendor\autoload.php');
-use  DatabaseConnection;
+namespace App\Repository;
+use  App\DatabaseConnection;
 
 trait BaseRepository{
 

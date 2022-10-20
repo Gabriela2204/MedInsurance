@@ -1,6 +1,6 @@
 <?php
-namespace Repository;
-use Entity\Insurances as Insurances;
+namespace App\Repository;
+use App\Entity\Insurances as Insurances;
 
 abstract class AbstractRepository {
  

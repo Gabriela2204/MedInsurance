@@ -1,10 +1,9 @@
 <?php
 
-namespace Controller;
-require_once 'autoloader.php';
+namespace App\Controller;
 
-use Views\View as View;
-use Repository\Insurance as InsuranceRepo;
+use App\Views\View as View;
+use App\Repository\Insurance as InsuranceRepo;
 
 
 class Insurance{

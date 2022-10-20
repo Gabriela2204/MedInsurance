@@ -1,7 +1,6 @@
 <?php
-   namespace Repository;
-   require('C:\xampp\htdocs\MedInsurance\vendor\autoload.php');
-   use Entity\Insurances as Insurances;
+   namespace App\Repository;
+   use App\Entity\Insurances as Insurances;
 
    class Insurance extends AbstractRepository{
     

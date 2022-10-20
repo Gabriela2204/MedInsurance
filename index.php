@@ -1,12 +1,12 @@
 <?php
 
 namespace index;
+require_once "vendor/autoload.php";
+
 
 $controllerName = $_GET['controller'];
 $action = $_GET['action'];
-require_once(__DIR__."\Controller\\".$controllerName.'.php');
-
-$class ="Controller\\$controllerName" ;
+$class ="App\\Controller\\$controllerName" ;
 
 $controller  = new $class();
 $controller->$action(); 
