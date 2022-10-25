@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
+
 use App\Views\View as View;
-use App\Repository\Insurance as InsuranceRepo;
+use App\Repository\Insurances as InsuranceRepo;
 
 
 class Insurance{
@@ -13,7 +14,7 @@ class Insurance{
        
         $repo = new InsuranceRepo;
         $view = new View();
-        $view ->Overview($repo->AllInfo('insurances'));
+        $view ->Overview($repo->AllInfo());
     
         
     }

@@ -11,8 +11,8 @@ class DatabaseConnection{
    private function __construct(){
       
       $config = new Configuration();
-      self::$dbh = new \PDO('mysql:host='.$config->getLocalhost().';dbname='.$config->getDbname(),
-      $config->getUser(), $config->getPass());
+      self::$dbh = new \PDO('mysql:host='.$config->getConstantByKey("localhost").';dbname='.$config->getConstantByKey("dbname"),
+      $config->getConstantByKey("user"), $config->getConstantByKey("pass"));
       
        
    }

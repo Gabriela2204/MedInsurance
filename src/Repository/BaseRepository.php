@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 use  App\DatabaseConnection;
-use ReflectionClass;
+
 
 class BaseRepository{
 
@@ -28,7 +28,8 @@ class BaseRepository{
     }
 
     public function getClassProperties(){
-        $reflect = new ReflectionClass("App\Entity\\".ucfirst($this->tableName));
+        echo $this->tableName;
+        $reflect = new \ReflectionClass("App\Entity\\".ucfirst($this->tableName));
         $props = $reflect->getProperties();
         $string="";
         foreach ($props as $prop) {
@@ -37,6 +38,17 @@ class BaseRepository{
         
         return rtrim($string,',');
     }
+
+    public function getClassValues($object){
+        $reflect = new \ReflectionClass($object);
+        $props = $reflect->getProperties();
+        $string="";
+        foreach ($props as $prop) {       
+            $string=$string.$prop->getValue($object).',';
+        }
+        
+        return rtrim($string,',');
+    } 
 
     public function findAll(){
         
@@ -59,9 +71,9 @@ class BaseRepository{
     public function insert($object){
 
         $properties = $this->getClassProperties();
-        echo $properties;
-        
-        // return $this->queryAndFetch('insert into'.$this->tableName.'('.$string.') values ('.$object->getId().','.$object->getId_Type().')');
+        $values = $this->getClassValues($object);
+
+        return $this->queryAndFetch('insert into '.$this->tableName.'('.$properties.') values ('.$values.')');
     }
 }
 

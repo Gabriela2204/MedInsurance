@@ -1,10 +1,9 @@
 <?php
    namespace App\Repository;
-   use App\Entity\Insurances as Insurances;
+ 
 
-   class Insurance extends AbstractRepository{
+   class Insurances extends BaseRepository{
     
-     use BaseRepository;
 
     public function AllInfo(){
           
@@ -15,19 +14,6 @@
           inner join customer on customer.id =  insurances_customer.id_customer ');
     }
     
-     public function insert(Insurances $insurance){
-        
-       
-        return $this->queryAndFetch('insert into insurances(id, id_type) values ('.$insurance->getId().','.$insurance->getId_Type().')');
-
-    }
-
-
-    public function update(Insurances $insurance , $id){
-         
-        return $this->queryAndFetch('update insurances set id_type = '.$insurance->getId().'where id='.$id);
-
-    }
  
    }
  

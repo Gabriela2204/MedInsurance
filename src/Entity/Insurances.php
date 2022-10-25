@@ -7,12 +7,10 @@ class Insurances{
     public  $id;
     public $id_type;
 
-   function __construct($id, $id_type){
-        
-       $this->id = $id;
-       $this->id_type = $id_type;
-    
-   }
+    public function __construct($id = NULL,$id_type = NULL ){
+      $this->id = $id;
+      $this->id_type = $id_type;
+    }
 
    public function getId(){
     

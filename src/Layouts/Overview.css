@@ -1,0 +1,13 @@
+.table{
+    margin-top: 100px;
+    margin-left: 300px;
+    border: 1px solid;
+    width: 60%;
+}
+
+#myInput{
+    position:absolute;
+     left:300px; 
+     top:120px; 
+     border: 1px solid; 
+}
