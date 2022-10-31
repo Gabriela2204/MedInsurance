@@ -4,11 +4,10 @@ namespace App\Entity;
 
 class Insurances{
         
-    public  $id;
+     
     public $id_type;
 
-    public function __construct($id = NULL,$id_type = NULL ){
-      $this->id = $id;
+    public function __construct($id_type = NULL ){
       $this->id_type = $id_type;
     }
 

@@ -13,6 +13,12 @@ class View {
         echo $twig->render('Overview.twig',$data);
     } 
 
+    public function AddNewCustomer(){
+
+        $loader = new FilesystemLoader('C:\xampp\htdocs\MedInsurance\src\Layouts');
+        $twig = new \Twig\Environment($loader);
+        echo $twig->render('AddNewCustomer.twig');
+    }
 
 }
 

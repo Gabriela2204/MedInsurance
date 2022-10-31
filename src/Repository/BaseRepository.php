@@ -43,7 +43,10 @@ class BaseRepository{
         $reflect = new \ReflectionClass($object);
         $props = $reflect->getProperties();
         $string="";
-        foreach ($props as $prop) {       
+        foreach ($props as $prop) {   
+            if(gettype($prop->getValue($object)) === "string")    
+            $string=$string."\"".$prop->getValue($object)."\"".',';
+            else
             $string=$string.$prop->getValue($object).',';
         }
         
@@ -56,7 +59,7 @@ class BaseRepository{
  
      }
 
-     public function find($id){
+     public function findBy($id){
 
         return $this->queryAndFetch('select * from '.$this->tableName.'where id=:'.$id);
     }
@@ -72,7 +75,8 @@ class BaseRepository{
 
         $properties = $this->getClassProperties();
         $values = $this->getClassValues($object);
-
+       
+         
         return $this->queryAndFetch('insert into '.$this->tableName.'('.$properties.') values ('.$values.')');
     }
 }
