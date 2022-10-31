@@ -13,8 +13,9 @@ class Insurance{
     {
        
         $repo = new InsuranceRepo;
+        $filter = $repo->filter();
         $view = new View();
-        $view ->Overview($repo->AllInfo());
+        $view ->Overview($repo->AllInfo(), $filter);
     
         
     }

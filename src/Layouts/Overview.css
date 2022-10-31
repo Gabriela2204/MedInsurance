@@ -11,3 +11,20 @@
      top:120px; 
      border: 1px solid; 
 }
+#mySearchButton{
+    position:absolute;
+    left:500px; 
+    top:120px; 
+    border: 1px solid; 
+}
+.p{
+    left:500px; 
+    top:600px; 
+}
+
+#myResetButton{
+    position:absolute;
+    left:580px; 
+    top:120px; 
+    border: 1px solid; 
+}

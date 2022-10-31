@@ -1,10 +1,18 @@
 {% extends 'BaseLayout.twig' %}
+
+{% block title %}
+    Insurances
+{% endblock %}
+
 {% block content %}
 
-<script src="src\Layouts\Overview.js"></script>
 <link rel="stylesheet" href="src/Layouts/Overview.css">
 
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search" >
+    <form name="search_form" method="POST">
+    <input type="text" id="myInput" name="search_box"  placeholder="Search" value=""/>
+    <input type="submit" id="mySearchButton" name="search" value="Search"/>
+    <input type="submit" id="myResetButton"  name="reset" value="Reset"  />
+    </form>
 
         <table id="Overview" class ="table">
             <tr class="table-success">        
@@ -15,9 +23,11 @@
                 <th scope="col" >Type</th> 
                 <th scope="col" >Customer</th>  
             </tr>
+        {% if filters == [] %}  
         {% for info in Infos %}
+       
             <tr>
-                <td>{{ info.id }}</td>
+                <td>{{ info.ID }}</td>
                 <td>{{ info.pricing}}</td>
                 <td>{{ info.status}}</td>
                 <td>{{ info.start_time |date('Y-m-d H:i:s')}}</td>
@@ -25,6 +35,18 @@
                 <td>{{ info.Client}}</td>
 
             </tr>
+        {% endfor %}
+        {% endif %}
+        {% for filter in filters %}
+        <tr>
+            <td>{{ filter.ID }}</td>
+            <td>{{ filter.pricing}}</td>
+            <td>{{ filter.status}}</td>
+            <td>{{ filter.start_time |date('Y-m-d H:i:s')}}</td>
+            <td>{{ filter.Type}}</td>
+            <td>{{ filter.Client}}</td>
+
+        </tr>
         {% endfor %}
         </table>
 {% endblock %}
