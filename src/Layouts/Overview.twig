@@ -23,7 +23,7 @@
                 <th scope="col" >Type</th> 
                 <th scope="col" >Customer</th>  
             </tr>
-        {% if filters == [] %}  
+ 
         {% for info in Infos %}
        
             <tr>
@@ -35,18 +35,6 @@
                 <td>{{ info.Client}}</td>
 
             </tr>
-        {% endfor %}
-        {% endif %}
-        {% for filter in filters %}
-        <tr>
-            <td>{{ filter.ID }}</td>
-            <td>{{ filter.pricing}}</td>
-            <td>{{ filter.status}}</td>
-            <td>{{ filter.start_time |date('Y-m-d H:i:s')}}</td>
-            <td>{{ filter.Type}}</td>
-            <td>{{ filter.Client}}</td>
-
-        </tr>
         {% endfor %}
         </table>
 {% endblock %}

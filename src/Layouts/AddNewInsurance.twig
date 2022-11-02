@@ -1,0 +1,45 @@
+{% extends 'BaseLayout.twig' %}
+
+{% block title %}
+    Add New Insurance
+{% endblock %}
+
+{% block content %}
+
+
+<div class="card"  style="width: 21rem; position: relative; left: 40%; top: 30%;">
+    <div class="card-body">
+    <form name="add_form" id="add_form" method="POST">
+
+    <div class="form-group">
+        <label for="Customer">Customer Name</label>
+        <input type="text" class="form-control" id="myCustomer" name="customer_form"  placeholder="Customer" value=""/>
+        </div>
+
+    <div class="form-group">
+        <label for="Type">Type of insurance</label>
+        <input type="text" class="form-control" id="myType" name="type_form"  placeholder="Type" value=""/>
+        </div>
+       
+    
+    <div class="form-group">
+        <label for="Insurer">Insurer Name</label>
+        <input type="text" class="form-control" id="myInsurer" name="insurer_form"  placeholder="Insurer" value=""/>
+        </div>
+    
+        <input type="submit" class="btn btn-success" style="position: relative; left: 35%;"  name="Services" value="Services"/>        
+
+    <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Default checkbox
+            </label>
+          </div>
+
+    <input type="submit" class="btn btn-success" id="myAddButton" name="add" value="Add"/>
+    
+    </form>
+</div>
+</div>
+       
+{% endblock %}

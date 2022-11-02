@@ -3,8 +3,8 @@ namespace App;
 
 class Router{
 
-    public $controller;
-    public $action;
+    public string $controller;
+    public string $action;
 
     public function __construct()
     {

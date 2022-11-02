@@ -1,10 +1,11 @@
 <?php
 namespace App\Entity;
-class Customer{
+
+class Insurers{
         
 
-    public string $name;
-    public string $adress;
+    public ?string $name;
+    public ?string $adress;
 
     public function __construct(string $name = NULL ,string $adress = NULL){
 
@@ -14,12 +15,12 @@ class Customer{
 
 
 
-   public function getName():string {
+   public function getName(): string{
 
     return $this->name;
 
    }
-   public function getAdress():string{
+   public function getAdress(): string{
 
     return $this->adress;
 

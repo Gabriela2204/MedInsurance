@@ -6,14 +6,14 @@ use  App\DatabaseConnection;
 
 class BaseRepository{
 
-    private $tableName;
+    private string $tableName;
 
     public function __construct()
     {
         $this->tableName = strtolower(ltrim(get_called_class(),"App\Repository"));
     }
 
-    public function queryAndFetch($sql)
+    public function queryAndFetch(string $sql): ?array
     {
 
         $db = DatabaseConnection::getInstance();
@@ -27,7 +27,7 @@ class BaseRepository{
  
     }
 
-    public function getClassProperties(){
+    public function getClassProperties():string {
         echo $this->tableName;
         $reflect = new \ReflectionClass("App\Entity\\".ucfirst($this->tableName));
         $props = $reflect->getProperties();
@@ -39,7 +39,7 @@ class BaseRepository{
         return rtrim($string,',');
     }
 
-    public function getClassValues($object){
+    public function getClassValues($object):string {
         $reflect = new \ReflectionClass($object);
         $props = $reflect->getProperties();
         $string="";
@@ -53,25 +53,25 @@ class BaseRepository{
         return rtrim($string,',');
     } 
 
-    public function findAll(){
+    public function findAll(): ?array{
         
         return $this->queryAndFetch('select * from '.$this->tableName);
  
      }
 
-     public function findBy($id){
+     public function findBy(int $id): ?array{
 
         return $this->queryAndFetch('select * from '.$this->tableName.'where id=:'.$id);
     }
 
-    public function delete($id){
+    public function delete(int $id): ?array{
        
         
         return $this->queryAndFetch('delete from '.$this->tableName.' where id=:'.$id);
     }
 
 
-    public function insert($object){
+    public function insert($object): ?array{
 
         $properties = $this->getClassProperties();
         $values = $this->getClassValues($object);

@@ -3,14 +3,14 @@ namespace App\Entity;
 class Insurances_customer{
         
 
-    public $id_insurances;
-    public $id_customer;
-    public $pricing;
-    public $start_time;
-    public $end_time;
-    public $status;
+    public int $id_insurances;
+    public int $id_customer;
+    public float $pricing;
+    public string $start_time;
+    public string $end_time;
+    public string $status;
 
-    public function __construct( $id_insurances = NULL , $id_customer = NULL,$pricing = NULL, $start_time = NULL ,$end_time = NULL ,$status = NULL  ){
+    public function __construct(int $id_insurances = NULL , int $id_customer = NULL,float $pricing = NULL, string $start_time = NULL ,string $end_time = NULL ,string $status = NULL  ){
 
       $this->id_insurances = $id_insurances;
       $this->id_customer = $id_customer;
