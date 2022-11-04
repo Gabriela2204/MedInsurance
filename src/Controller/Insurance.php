@@ -8,7 +8,7 @@ use App\Repository\Insurances as InsuranceRepo;
 use App\Repository\Insurers as Insurers;
 
 
-class Insurance{
+class Insurance extends BaseController{
 
     public function overview()
     {
@@ -16,6 +16,7 @@ class Insurance{
         $repo = new InsuranceRepo;
         $view = new View();
         $view ->Overview($repo->AllInfo(),$this->filter());
+       
     
         
     }
@@ -30,70 +31,44 @@ class Insurance{
         $view ->addNewInsurance();
     }
 
-    public function filter(): array{
-        session_start();
-           
-        
-              if(isset($_POST['search']) || isset($_POST['reset'])){
-                 
-                 if(isset($_POST['search']))
-                 {
-                 $search_term= $_POST['search_box'];
-                 $_SESSION['search_box'] = $search_term;
-                 }
-                 else 
-                 return [];
-  
-                 header('Location: index.php?controller=Insurance&action=overview');
-                 exit;
-        
-              
-              }
-              $sqlFilter = $this->sql;
-              if (isset($_SESSION['search_box'])) {
-                 $search = $_SESSION['search_box'];
+    public function filter(): ?array{
+          
+        if($this->request->getRequestMethod() === 'POST'){
+              if( $this->request->getValue('search')!=null || $this->request->getValue('reset')!=null ){
+
+                 if( $this->request->getValue('search_box') !=null ){
+                 $repo = new InsuranceRepo;   
+                 $sqlFilter = $repo->sql;
+                 $search= $this->request->getValue('search_box');
                  $sqlFilter  .=" where insurances_customer.status LIKE  '%{$search}%'";
-                 if(strtotime($search)) {
+                 if(strtotime($search)){
                     echo strtotime($search);
                     $sqlFilter  .=" or insurances_customer.start_time LIKE '{$search}'";
-                 }
-                 
+                 }  
                  $sqlFilter  .=" or type.name LIKE  '%{$search}%'";
-                 $sqlFilter .=" or customer.name LIKE  '%{$search}%'";
-                 $repo = new InsuranceRepo;
-                 $query = $repo->queryAndFetch( $sqlFilter ); 
-                 unset($_SESSION['search_box']);
+                 $sqlFilter .=" or customer.name LIKE  '%{$search}%'"; 
+                 $query = $repo->queryAndFetch( $sqlFilter );
+
                  return $query;
              }
-             else return [];
+             
       }
+    }
+       return [];
+    }
 
       public function InsurerServices(): array{
-        session_start();
-           
-        
-              if(isset($_POST['Services']) && isset($_POST['insurer_form'])){
+     
+              if($this->request->getValue('Services')!=null  && $this->request->getValue('insurer_form')!=null ){
                  
-                 echo "sunt in if";
-                 $insurer= $_POST['insurer_form'];
-                 $_SESSION['insurer_form'] = $insurer;
-  
-                 header('Location: index.php?controller=Insurance&action=AddNewInsurance');
-                 exit;
-        
-              
-              }
-              if (isset($_SESSION['insurer_form'])) {
-                 $insurer = $_SESSION['insurer_form'];
+                 $insurer= $this->request->getValue('insurer_form');
                  $repo = new InsuranceRepo;
-                return $repo->queryAndFetch("Select id from insurers where name = '{$insurer}'");
-  
-                 unset($_SESSION['insurer_form']);
-        
-             }
-             else return [];
+                return $repo->queryAndFetch("Select id from insurers where name = '{$insurer}'");     
       }
+      
+      return [];
 
+    }
 }
 
 

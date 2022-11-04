@@ -1,9 +1,20 @@
 <?php
 namespace App\Entity;
+
+use App\Attribute\OnlyLetters;
+use App\Attribute\Required;
+
+
+// use Attribute;
+
+// #[Attribute(Attribute::TARGET_PROPERTY)]
+ 
 class Customer{
         
-
+    #[Required, OnlyLetters]
     public string $name;
+    
+    #[Required]
     public string $adress;
 
     public function __construct(string $name = NULL ,string $adress = NULL){

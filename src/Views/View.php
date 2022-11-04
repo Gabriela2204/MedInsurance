@@ -14,11 +14,11 @@ class View {
        echo $twig->render('Overview.twig',$data);
     } 
 
-    public function AddNewCustomer(){
-
+    public function AddNewCustomer(string $errors = Null){
         $loader = new FilesystemLoader('C:\xampp\htdocs\MedInsurance\src\Layouts');
+        $errors = array("Error" => $errors);
         $twig = new \Twig\Environment($loader);
-        echo $twig->render('AddNewCustomer.twig');
+        echo $twig->render('AddNewCustomer.twig', $errors);
     }
 
     public function AddNewInsurance(){

@@ -20,9 +20,15 @@
     <div class="form-group">
     <label for="Adress">Adress</label>    
     <input type="text" class="form-control" id="myAdress" name="adress_form"  placeholder="Adress" value=""/>
+    {% if (Error != []) %}
+    <label>{{ Error }} </label>
+    {% endif %}
     </div>
+       
+   
+
     <input type="submit" class="btn btn-success" id="myAddButton" name="add" value="Add"/>
-    
+ 
     </form>
 </div>
 </div>

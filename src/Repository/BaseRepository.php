@@ -28,7 +28,6 @@ class BaseRepository{
     }
 
     public function getClassProperties():string {
-        echo $this->tableName;
         $reflect = new \ReflectionClass("App\Entity\\".ucfirst($this->tableName));
         $props = $reflect->getProperties();
         $string="";
