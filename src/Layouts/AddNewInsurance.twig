@@ -9,36 +9,46 @@
 
 <div class="card"  style="width: 21rem; position: relative; left: 40%; top: 30%;">
     <div class="card-body">
-    <form name="add_form" id="add_form" method="POST">
+    <form name="add_form" id="add_form" method="post"></form>
 
     <div class="form-group">
         <label for="Customer">Customer Name</label>
-        <input type="text" class="form-control" id="myCustomer" name="customer_form"  placeholder="Customer" value=""/>
+        <input type="text" class="form-control" id="myCustomer" name="customer_form"  placeholder="Customer" value="" form="add_form"/>
         </div>
 
     <div class="form-group">
         <label for="Type">Type of insurance</label>
-        <input type="text" class="form-control" id="myType" name="type_form"  placeholder="Type" value=""/>
+        <input type="text" class="form-control" id="myType" name="type_form"  placeholder="Type" value="" form="add_form"/>
         </div>
-       
-    
+ 
     <div class="form-group">
-        <label for="Insurer">Insurer Name</label>
-        <input type="text" class="form-control" id="myInsurer" name="insurer_form"  placeholder="Insurer" value=""/>
-        </div>
-    
-        <input type="submit" class="btn btn-success" style="position: relative; left: 35%;"  name="Services" value="Services"/>        
+        <form  method="get" id="getServices">
+            <input type="hidden" name="controller" value="Insurance" />
+            <input type="hidden" name="action" value="AddNewInsurance" />
+            <label for="insurer">Choose an insurer:</label>
+            <select name="name_insurer" value="name" >
+                {% for name in Names %}
+                  <option >{{ name.name }}</option>
+              {% endfor %}
+            </select>
+        </form>
+            <br><br>
+            <input type="submit" class="btn btn-success" style="position: relative; left: 35%;"  name="Services" value="Services" form="getServices"/>    
+    </div>    
+    <div class="form-group">
 
-    <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">
-              Default checkbox
-            </label>
-          </div>
+      {% if Services !=[] %}
+        <label for="insurer">Choose services:</label><br>
+            {% for service in Services %}
+            <input type="checkbox" name="checkbox[]" value = {{service.name}} form="add_form">
+            <label for="option"> {{service.name}}</label><br>
+          {% endfor %}
+          <input type="submit" class="btn btn-success" id="myAddButton" name="add" value="add" form="add_form"/>
+        <br>
+        {% endif %}
+    </div>
 
-    <input type="submit" class="btn btn-success" id="myAddButton" name="add" value="Add"/>
-    
-    </form>
+ 
 </div>
 </div>
        
