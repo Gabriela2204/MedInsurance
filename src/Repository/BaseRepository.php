@@ -19,9 +19,10 @@ class BaseRepository{
         $db = DatabaseConnection::getInstance();
         if($db != null)
        { 
+
         $result = $db->prepare($sql);
         $result -> execute();
-        $response= $result->fetchAll(\PDO::FETCH_CLASS,"App\Entity\\".ucfirst($this->tableName));
+        $response= $result->fetchAll(\PDO::FETCH_CLASS|\PDO::FETCH_PROPS_LATE,"App\Entity\\".ucfirst($this->tableName));
         return $response;
     }
  

@@ -4,7 +4,6 @@ namespace App\Entity;
 
 class Insurances{
         
-     
     public ?int $id_type;
 
     public function __construct(int $id_type = NULL ){
@@ -12,7 +11,12 @@ class Insurances{
       $this->id_type = $id_type;
     }
 
+    public function getId(): int {
+
+      return $this->id;
   
+     }
+    
    public function getId_type(): int {
 
     return $this->id_type;

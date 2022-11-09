@@ -14,8 +14,12 @@ class Request{
         
     }
 
-    public function getValue($key){
+    public function getValue(string $key){
         return $_REQUEST[$key];
+    }
+
+    public function verifyIfIsset(string $key){
+        return isset($_REQUEST[$key]);
     }
  
     public function getRequestMethod(): string{

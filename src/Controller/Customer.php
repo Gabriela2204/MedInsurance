@@ -34,16 +34,16 @@ class Customer extends BaseController{
       }
       public function add() {
         
-              if($this->request->getRequestMethod() == 'POST' && $this->request->getValue('add')){
-                      $customer = new CustomerEntity($this->request->getValue('name_form'), $this->request->getValue('adress_form'));
-                      $valid = new Validater;
-                      if($valid->validate($customer) == null)
-                      {
-                        $repo = new CustomerRepo;
-                        $repo->insert($customer);
-                        $dbh = Database::getInstance(); 
-                        $this->addBasicInsurance($dbh->lastInsertId());
-                      }
+        if($this->request->getRequestMethod() == 'POST' && $this->request->getValue('add')){
+            $customer = new CustomerEntity($this->request->getValue('name_form'), $this->request->getValue('adress_form'));
+            $valid = new Validater;
+            if($valid->validate($customer) == null)
+                {
+                    $repo = new CustomerRepo;
+                    $repo->insert($customer);
+                    $dbh = Database::getInstance(); 
+                    $this->addBasicInsurance($dbh->lastInsertId());
+                }
                         $error = $valid->validate($customer);
                         return $error;
               }

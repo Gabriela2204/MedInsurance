@@ -1,9 +1,12 @@
 <?php
 namespace App\Entity;
 
+use App\Attribute\Required;
+
 class Insurers{
         
-
+    public int $id;
+    #[Required]
     public ?string $name;
     public ?string $adress;
 

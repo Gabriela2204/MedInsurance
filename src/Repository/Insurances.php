@@ -16,7 +16,10 @@
           return $this->queryAndFetch( $this->sql);
     }
 
-   
+    public function LastInsurance(): ?array{
+
+      return $this->queryAndFetch("SELECT * FROM insurances WHERE id = (SELECT MAX(id) FROM insurances)");
+    }
  
    }
  

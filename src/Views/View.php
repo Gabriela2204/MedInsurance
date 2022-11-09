@@ -21,10 +21,12 @@ class View {
         echo $twig->render('AddNewCustomer.twig', $errors);
     }
 
-    public function AddNewInsurance(){
+    public function AddNewInsurance(array $names,array $services = Null){
+        $data = array("Names" =>$names);
+        $data["Services"] = $services;
         $loader = new FilesystemLoader('C:\xampp\htdocs\MedInsurance\src\Layouts');
         $twig = new \Twig\Environment($loader);
-        echo $twig->render('AddNewInsurance.twig');
+        echo $twig->render('AddNewInsurance.twig',$data);
 
     }
 
