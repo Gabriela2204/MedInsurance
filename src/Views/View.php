@@ -14,21 +14,40 @@ class View {
        echo $twig->render('Overview.twig',$data);
     } 
 
-    public function AddNewCustomer(string $errors = Null){
+    public function AddNewCustomer(array $errors = Null){
         $loader = new FilesystemLoader('C:\xampp\htdocs\MedInsurance\src\Layouts');
-        $errors = array("Error" => $errors);
+        $errors = array("Errors" => $errors);
         $twig = new \Twig\Environment($loader);
         echo $twig->render('AddNewCustomer.twig', $errors);
     }
 
-    public function AddNewInsurance(array $names,array $services = Null){
+    public function AddNewInsurance(array $names, array $types, array $error=null){
         $data = array("Names" =>$names);
-        $data["Services"] = $services;
+        $data['Errors'] = $error;
+        $data['Types'] = $types;
         $loader = new FilesystemLoader('C:\xampp\htdocs\MedInsurance\src\Layouts');
         $twig = new \Twig\Environment($loader);
         echo $twig->render('AddNewInsurance.twig',$data);
 
     }
+    public function CustomerOverview(array $data, array $filter = Null){
+        $data = array("Infos" =>$data);
+        if($filter != [])
+          $data["Infos"] = $filter;
+        $loader = new FilesystemLoader('C:\xampp\htdocs\MedInsurance\src\Layouts');
+        $twig = new \Twig\Environment($loader);
+        echo $twig->render('CustomerOverview.twig',$data);
+
+    }
+
+    public function ViewDetails(array $data = null){
+      $data = array("Infos" =>$data);
+      $loader = new FilesystemLoader('C:\xampp\htdocs\MedInsurance\src\Layouts');
+      $twig = new \Twig\Environment($loader);
+      echo $twig->render('ViewDetails.twig',$data);
+
+  }
+
 
 }
 

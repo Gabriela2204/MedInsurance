@@ -8,9 +8,10 @@
     public function getServices(string $name): array{
 
         $id = $this->queryAndFetch("SELECT id from insurers where name = "."'".$name."'");
-        return $this->queryAndFetch(" SELECT  services.name , services.price from services
+        $services = $this->queryAndFetch(" SELECT  services.name from services
         inner join insurers_services on services.id = insurers_services.id_services
         where insurers_services.id_insurers = ".$id[0]->id);
+        return $services;
     }
 
    public function getNames(): array{

@@ -8,6 +8,7 @@ class Type{
     public int $id;
     #[Required]
     public string $name;
+    public bool $multiple;
 
     
     public function getId() :int {

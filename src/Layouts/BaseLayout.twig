@@ -1,25 +1,24 @@
 {% block head %}
 <html>
 <head>
-    
       <link rel="stylesheet" href="src/Layouts/BaseLayout.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  {% block javascript %}{% endblock %}
     
 </head>
 {% endblock %}
 
-<div class="center">
+<nav class="center sticky-top navbar-inverse navbar-fixed-top">
   <h1>{% block title %} {% endblock %}</h1>
-</div>
+</nav>
 
 {% block sidebar %}
 <div class="sidebar">
-    
-    <a class="active" href="index.php?controller=Insurance&action=overview">Insurances</a>
-    <a href="index.php?controller=Customer&action=addNewCustomer">Add New Customer</a>
-    <a href="index.php?controller=Insurance&action=addNewInsurance">Add New Insurance</a>
-     
+
+    <a class="active " href="index.php?controller=Insurance&action=overview">Insurances</a>
+    <a  href="index.php?controller=Customer&action=overview">Customers</a>
+    <a  href="index.php?controller=Customer&action=addNewCustomer">Add New Customer</a>
+    <a  href="index.php?controller=Insurance&action=addNewInsurance">Add New Insurance</a>
   </div>
 {% endblock %}
 

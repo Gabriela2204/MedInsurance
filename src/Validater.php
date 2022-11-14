@@ -17,6 +17,7 @@ class Validater{
      
         $reflect = new \ReflectionClass($object);
         $properties = $reflect->getProperties();
+        $error =array();
         foreach ($properties as $property) {
          
             $propertyReflect = new \ReflectionProperty($object,$property->getName());
@@ -28,17 +29,21 @@ class Validater{
 
             if($attr === 'Required' && $object->$propertyName == null)
                {
-                   return "Please fill the boxes";
+        
+                   array_push($error, 'Fill the '.$propertyName.' box');
                      
                } 
             if($attr == 'OnlyLetters' && $this->validateLetters($object->$propertyName) == 1)
             {
-                return "Use just letters";   
+                array_push($error,'Use just letters for '.$propertyName);
+                  
             }
 
             }
        
         }
+
+        return $error;
     }
 
 }

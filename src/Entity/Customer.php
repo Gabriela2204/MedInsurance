@@ -9,7 +9,7 @@ class Customer{
     #[Required, OnlyLetters]
     public ?string $name;
     
-    #[Required]
+    
     public ?string $adress;
 
     public function __construct(string $name = NULL ,string $adress = NULL){

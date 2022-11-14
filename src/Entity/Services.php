@@ -9,7 +9,7 @@ class Services{
     #[Required]
     public string $name;
     public string $description;
-    public int $price;
+    public ?int $price;
 
 
 

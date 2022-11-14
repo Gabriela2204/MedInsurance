@@ -1,14 +1,11 @@
 {% extends 'BaseLayout.twig' %}
-
 {% block title %}
-    Insurances
+    Customers
 {% endblock %}
 
 {% block content %}
-
 <link rel="stylesheet" href="src/Layouts/Overview.css">
-
-    <form name="search_form" method="POST">
+<form name="search_form" method="POST">
     <input type="text" id="myInput" name="search_box"  placeholder="Search" value=""/>
     <input type="submit" id="mySearchButton" name="search" value="Search"/>
     <input type="submit" id="myResetButton"  name="reset" value="Reset"  />
@@ -17,23 +14,21 @@
         <table id="Overview" class ="table">
             <tr class="table-success">        
                 <th scope="col">ID</th>
-                <th scope="col" >Status</th>
-                <th scope="col" >Start_time</th>  
-                <th scope="col" >Type</th> 
-                <th scope="col" >Customer</th>  
+                <th scope="col" >Customer Name</th>
+                <th scope="col" >Customer Address</th>   
+                <th scope="col" >Details</th> 
             </tr>
  
         {% for info in Infos %}
        
             <tr>
-                <td>{{ info.ID }}</td>
-                <td>{{ info.status}}</td>
-                <td>{{ info.start_time |date('Y-m-d H:i:s')}}</td>
-                <td>{{ info.Type}}</td>
-                <td>{{ info.Client}}</td>
+                <td>{{ info.id }}</td>
+                <td>{{ info.name}}</td>
+                <td>{{ info.adress}}</td>
+                <td><a href="index.php?controller=Customer&action=ViewDetails&id={{ info.id }}" class="btn btn-outline-success"> View Details </a></td>
 
             </tr>
         {% endfor %}
         </table>
-{% endblock %}
 
+{% endblock %}
