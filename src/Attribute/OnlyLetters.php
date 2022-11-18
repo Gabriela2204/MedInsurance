@@ -4,7 +4,8 @@ namespace App\Attribute;
 use Attribute;
 
 #[Attribute]
-class OnlyLetters{
+class OnlyLetters
+{
 
 }
 

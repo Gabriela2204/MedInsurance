@@ -1,8 +1,8 @@
 <?php
 namespace App;
 
-class Router{
-
+class Router
+{
     public string $controller;
     public string $action;
 
@@ -11,16 +11,13 @@ class Router{
         $this->controller = $_GET['controller'];
         $this->action = $_GET['action'];
     }
-    public function router(){
-
+    public function router()
+    {
         $class ="App\\Controller\\$this->controller" ; 
         $controllerRouter  = new $class();
         $actiune = $this->action; 
         $controllerRouter->$actiune(); 
     }
-
-
-
 }
 
 ?>

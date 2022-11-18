@@ -2,7 +2,8 @@
 
 namespace App\Repository;
 
-class Service_insurances extends BaseRepository{
+class Service_insurances extends BaseRepository
+{
 
 }
 

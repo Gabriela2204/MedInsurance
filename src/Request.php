@@ -6,7 +6,6 @@ class Request{
     private string $RequestMethod;
     private string $QueryString;
     
-    
     public function __construct()
     {
         $this->RequestMethod = $_SERVER['REQUEST_METHOD'];
@@ -14,22 +13,25 @@ class Request{
         
     }
 
-    public function getValue(string $key){
+    public function getValue(string $key)
+    {
         return $_REQUEST[$key];
     }
 
-    public function verifyIfIsset(string $key){
+    public function verifyIfIsset(string $key)
+    {
         return isset($_REQUEST[$key]);
     }
  
-    public function getRequestMethod(): string{
+    public function getRequestMethod(): string
+    {
         return $this->RequestMethod;
     }
 
-    public function getQueryString(): string{
+    public function getQueryString(): string
+    {
         return $this->QueryString;
     }
-
 }
 
 ?>
