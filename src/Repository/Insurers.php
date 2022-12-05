@@ -13,9 +13,9 @@ class Insurers extends BaseRepository
         return $services;
     }
 
-    public function getNames(): array
+    public function getName(int $idInsurer): array
     {
-        return $this->queryAndFetch("SELECT name FROM  insurers");
+        return $this->queryAndFetch("SELECT name FROM  insurers where id = '".$idInsurer."'");
     }
 
     public function getIdInsurer(string $name): ?array

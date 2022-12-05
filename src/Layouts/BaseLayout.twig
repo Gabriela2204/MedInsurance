@@ -8,8 +8,9 @@
 </head>
 {% endblock %}
 
-<nav class="center sticky-top navbar-inverse navbar-fixed-top">
-  <h1>{% block title %} {% endblock %}</h1>
+<nav class="title sticky-top navbar-inverse navbar-fixed-top" >
+  <button onclick="window.location.href='index.php?controller=Insurance&action=logout'">Logout</button>
+  <h1 style="text-align :center">{% block title %} {% endblock %}</h1>
 </nav>
 
 {% block sidebar %}

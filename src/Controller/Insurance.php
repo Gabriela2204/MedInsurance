@@ -17,28 +17,43 @@ use App\Repository\Service_insurances;
 use App\Repository\Services as ServicesRepo;
 use App\Repository\Type as TypeRepo;
 use App\Validater;
+use App\Configuration;
 
 
 class Insurance extends BaseController
 {
     public function overview()
     {
-        $repo = new InsuranceRepo;
+        $this->verifySession();
+        $email = $this->session->getValue('email');
+        $repo = new InsuranceRepo();
         $view = new View();
-        $view ->Overview($repo->allInfo(),$this->filter());
+        $view ->Overview($repo->allInfoForInsurer($repo->getIdInsurer($email)[0]->id_insurer),$this->filter());
+    }
+
+    public function logout()
+    {   
+        $this->session->unsetVariable('email');
+        $this->session->unsetVariable('password');
+        $config = new Configuration();
+        header('Location:'.$config->getConstantByKey('loginPage'));
+        exit();
     }
 
     public function addNewInsurance()
-    {
-        $insurer = new InsurersRepo;
-        $type = new TypeRepo;    
+    {   
+        $this->verifySession();
+        $email = $this->session->getValue('email');
+        $repo = new InsuranceRepo();
+        $insurer = new InsurersRepo();
+        $type = new TypeRepo();    
         $view = new View();
-        $view ->AddNewInsurance($insurer->getNames(),$type->getNames(),$this->add());
+        $view ->AddNewInsurance($insurer->getName($repo->getIdInsurer($email)[0]->id_insurer),$type->getNames(),$this->add());
     }
 
     public function insurerServices()
-    {
-        $insurer = new InsurersRepo;
+    {   
+        $insurer = new InsurersRepo();
         if ($this->request->getRequestMethod() === 'GET' && $this->request->verifyIfIsset('name_insurer')) {  
             $services = $insurer->getServices($this->request->getValue('name_insurer'));
             $jsonServices = json_encode($services);
@@ -49,28 +64,28 @@ class Insurance extends BaseController
     }
     
     private function newInsurance(string $type)
-    {
-        $repoType = new TypeRepo;
+    {   
+        $repoType = new TypeRepo();
         $idType = $repoType->searchId($type);
         $newInsurance = new Insurances($idType[0]->id);
-        $repoInsurance = new InsuranceRepo;
+        $repoInsurance = new InsuranceRepo();
         $repoInsurance->insert($newInsurance);
     }
     private function newServiceInsurances(int $idServices, $price)
     {
         $idInsurances = $this->insuranceId();
         $newServiceInsurance = new EntityService_insurances($idServices,$idInsurances[0]->id, $price);
-        $repoServiceInsurances = new Service_insurances;
+        $repoServiceInsurances = new Service_insurances();
         $repoServiceInsurances->insert($newServiceInsurance);
     } 
 
     private function newInsurerInsurances(string $insurerName)
     {
-        $repoInsurer = new InsurersRepo;
+        $repoInsurer = new InsurersRepo();
         $idInsurances = $this->insuranceId();
         $idInsurer= $repoInsurer->getIdInsurer($insurerName);
         $newInsurerInsurances = new Insurers_insurances($idInsurer[0]->id, $idInsurances[0]->id);
-        $repoInsurerInsurances = new RepositoryInsurers_insurances;
+        $repoInsurerInsurances = new RepositoryInsurers_insurances();
         $repoInsurerInsurances->insert($newInsurerInsurances);
     }
 
@@ -83,7 +98,7 @@ class Insurance extends BaseController
 
     private function validateObject(object $object)
     {
-        $validater = new Validater;
+        $validater = new Validater();
         if ($validater->validate($object) != null) {
             $error = $validater->validate($object); 
             return $error;
@@ -104,7 +119,7 @@ class Insurance extends BaseController
     }
     private function verifyCustomer(string $name)
     {
-        $repo= new CustomerRepo;
+        $repo= new CustomerRepo();
         if ($repo->searchId($name) == []) {
           return $name.' must be a customer';
         }
@@ -114,9 +129,9 @@ class Insurance extends BaseController
     private function newInsuranceCustomer(string $customer ,string $insuranceType)
     {
         $idInsurances = $this->insuranceId();
-        $repoCustomer = new CustomerRepo;
+        $repoCustomer = new CustomerRepo();
         $idCustomer = $repoCustomer->searchId($customer);
-        $repoInsuranceCustomer = new Insurances_customer;
+        $repoInsuranceCustomer = new Insurances_customer();
         $time= time();
         $start_time =date("Y-m-d H:i:s",$time);
         if ($insuranceType == 'Private') {
@@ -131,8 +146,8 @@ class Insurance extends BaseController
 
     private function verifyType($type, $customer)
     {
-        $repoType = new TypeRepo;
-        $repoInsurance = new InsuranceRepo;
+        $repoType = new TypeRepo();
+        $repoInsurance = new InsuranceRepo();
         $multipleId = $repoType->getMultiple($type);
         if ($multipleId[0]->multiple != 1) {
             $existing = $repoInsurance->verifyInsuranceExisting($multipleId[0]->id, $customer);
@@ -160,7 +175,7 @@ class Insurance extends BaseController
                $error = array($this->verifyCustomer($customer));
                return $error;
            }
-           $repoServices = new ServicesRepo;
+           $repoServices = new ServicesRepo();
            $customerEntity = new Customer($customer);
            if ($this->validateObject($customerEntity) == null && $this->verifyValues($type,$insurerName) ==[]) {
                 $this->newInsurance($type);
@@ -191,7 +206,7 @@ class Insurance extends BaseController
         if ($this->request->getRequestMethod() === 'POST') {
             if ($this->request->verifyIfIsset('search')!=null || $this->request->verifyIfIsset('reset')!=null) {
                 if ($this->request->getValue('search_box') !=null) {
-                    $repo = new InsuranceRepo;   
+                    $repo = new InsuranceRepo();   
                     $sqlFilter = $repo->sql;
                     $search = $this->request->getValue('search_box');
                     $sqlFilter  .=" where insurances_customer.status LIKE  '%{$search}%'";

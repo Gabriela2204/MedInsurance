@@ -7,6 +7,11 @@ class User extends BaseRepository
    {
       return $this->queryAndFetch("Select count(*) as number from user where mail = '".$email."'");
    }
+
+   public function searchEmailPassword(string $email)
+   {
+      return $this->queryAndFetch("Select password from user where mail = '".$email."'");
+   }
 }
 
 ?>

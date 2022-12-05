@@ -8,8 +8,10 @@ use App\Entity\Insurances as Insurances;
 use App\DatabaseConnection as Database;
 use App\Entity\Insurances_customer;
 use App\Entity\Customer as CustomerEntity;
+use App\Entity\Insurers_insurances as EntityInsurers_insurances;
 use App\Repository\Insurances as RepositoryInsurances;
 use App\Repository\Insurances_customer as RepositoryInsurances_customer;
+use App\Repository\Insurers_insurances;
 use App\Repository\Services;
 use App\Repository\Type;
 use App\Validater;
@@ -22,8 +24,20 @@ class Customer extends BaseController
       $insurance = new Insurances(1);
       $insuranceRepo = new RepositoryInsurances;
       $insuranceRepo->insert($insurance); 
+      $email = $this->session->getValue('email');
+      $repo = new RepositoryInsurances();
       $dbh = Database::getInstance();
-      $this->addInsuranceCustomer($id_customer,$dbh->lastInsertID());
+      $insuranceID = $dbh->lastInsertID();
+      $this->addInsurersInsurance($repo->getIdInsurer($email)[0]->id_insurer, $insuranceID);
+      $this->addInsuranceCustomer($id_customer, $insuranceID);
+
+    }
+
+    public function addInsurersInsurance(int $idInsurer, int $idInsurances)
+    {
+      $insurerInsuranceRepo = new Insurers_insurances;
+      $insurerInsurancesEntity = new EntityInsurers_insurances($idInsurer, $idInsurances);
+      $insurerInsuranceRepo->insert($insurerInsurancesEntity);
     }
 
     private function addInsuranceCustomer(int $id_customer, int $id_insurances)
@@ -31,7 +45,7 @@ class Customer extends BaseController
       $time = time();
       $end = date('Y-m-d', strtotime('+10 years'));
       $insurance_customer = new Insurances_customer($id_insurances,$id_customer,date("Y-m-d h-m-s",$time),$end,"valabil");
-      $insurance_customerRepo = new RepositoryInsurances_customer;
+      $insurance_customerRepo = new RepositoryInsurances_customer();
       $insurance_customerRepo->insert($insurance_customer);
     }
 
@@ -39,9 +53,9 @@ class Customer extends BaseController
     {
       if ($this->request->getRequestMethod() == 'POST' && $this->request->getValue('add')) {
         $customer = new CustomerEntity($this->request->getValue('name_form'), $this->request->getValue('adress_form'));
-        $valid = new Validater;
+        $valid = new Validater();
         if ($valid->validate($customer) == null) {
-          $repo = new CustomerRepo;
+          $repo = new CustomerRepo();
           $repo->insert($customer);
           $dbh = Database::getInstance(); 
           $this->addBasicInsurance($dbh->lastInsertId());
@@ -52,7 +66,8 @@ class Customer extends BaseController
     }  
 
     public function addNewCustomer()
-    {
+    { 
+      $this->verifySession();
       $view = new View();
       $view->AddNewCustomer($this->add());
            
@@ -60,12 +75,15 @@ class Customer extends BaseController
 
     public function overview()
     {
-      $repo = new CustomerRepo;
+      $this->verifySession();
+      $email = $this->session->getValue('email');
+      $repoInsurance = new RepositoryInsurances();
+      $repo = new CustomerRepo();
       $view = new View();
       if ($this->filter() != []) {
         $data = $this->filter();
       } else {
-          $data = $repo->allInfo();
+          $data = $repo->allInfoForInsurer($repoInsurance->getIdInsurer($email)[0]->id_insurer);
       }
         $view ->CustomerOverview($data);
     }
@@ -75,7 +93,7 @@ class Customer extends BaseController
       if ($this->request->getRequestMethod() === 'POST') {
         if ($this->request->verifyIfIsset('search')!=null || $this->request->verifyIfIsset('reset')!=null) {
           if ($this->request->getValue('search_box') !=null) {
-            $repo = new CustomerRepo;   
+            $repo = new CustomerRepo();   
             $search= $this->request->getValue('search_box');
             $query = $repo->filter($search);
             return $query;
@@ -87,7 +105,7 @@ class Customer extends BaseController
   }
   private function serviceInsurance($idInsurance)
   { 
-    $repoServices = new Services;
+    $repoServices = new Services();
     $services = $repoServices->getServicesDetails($idInsurance->id_insurances);
     $data = array();
     foreach ($services as $service) {
@@ -98,7 +116,7 @@ class Customer extends BaseController
 
   private function price($idInsurance,$type)
   {
-    $repoServices = new Services;
+    $repoServices = new Services();
     $services = $repoServices->getServicesDetails($idInsurance->id_insurances);
     $price = 0;
     foreach ($services as $service) {
@@ -116,8 +134,8 @@ class Customer extends BaseController
   private function detailsInsurances($idCustomer)
   {
     $repoInsurancesCustomer =  new RepositoryInsurances_customer();
-    $repoType = new Type;
-    $repoInsurances = new RepositoryInsurances;
+    $repoType = new Type();
+    $repoInsurances = new RepositoryInsurances();
     $idsInsurances = $repoInsurancesCustomer->getIdInsurances($idCustomer);
     $data = array();
     foreach ($idsInsurances as $idInsurance) {
@@ -140,7 +158,7 @@ class Customer extends BaseController
       $idCustomer = $this->request->getValue('id');
       $data = $this->detailsInsurances($idCustomer);
     }
-    $view = new View;
+    $view = new View();
     $view->ViewDetails($data);
   }
 
