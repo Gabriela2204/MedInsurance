@@ -7,6 +7,7 @@
 
 <link rel="stylesheet" href="src/Layouts/Overview.css">
 
+{% if Errors == "" %}
 <table id="Overview" class ="table">
    <tr class="table-success">        
        <th scope="col">ID</th>
@@ -36,5 +37,11 @@
    </tr>
 {% endfor %}
 </table>
-
+{% else %}
+<div  style="text-align: center; position: fixed; left: 50% ;top:50%" class="card">
+   <div class="card-body">
+   {{Errors}}
+   </div>
+</div>
+{% endif %}
 {% endblock %}

@@ -13,13 +13,25 @@ class BaseRepository
         $this->tableName = strtolower(ltrim(get_called_class(),"App\Repository"));
     }
 
-    public function queryAndFetch(string $sql): ?array
+    public function queryAndFetch(string $sql, array $values = null): ?array
     {
         $db = DatabaseConnection::getInstance();
         if ($db != null) { 
             $result = $db->prepare($sql);
-            $result -> execute();
+            $result -> execute($values);
             $response= $result->fetchAll(\PDO::FETCH_CLASS|\PDO::FETCH_PROPS_LATE,"App\Entity\\".ucfirst($this->tableName));
+            return $response;
+        }
+    }
+ 
+    public function queryAndFetchForOne(string $sql, array $values = null)
+    {
+        $db = DatabaseConnection::getInstance();
+        if ($db != null) { 
+            $result = $db->prepare($sql);
+            $result -> execute($values);
+            $result -> setFetchMode(\PDO::FETCH_CLASS|\PDO::FETCH_PROPS_LATE,"App\Entity\\".ucfirst($this->tableName));
+            $response= $result->fetch();
             return $response;
         }
     }

@@ -4,9 +4,13 @@
 
 class Insurances_customer extends BaseRepository
 {
-   public function getIdInsurances(int $id_customer): array
+   public function getInsurancesIdByCustomer(int $id_customer): array
    {
-      return $this->queryAndFetch("select id_insurances from insurances_customer where id_customer like '".$id_customer."'");
+      return $this->queryAndFetch("select id_insurances from insurances_customer where id_customer like ? ",[$id_customer]);
+   }
+   public function getIdInsurer(int $id_insurances)
+   {
+      return $this->queryAndFetchForOne("select id_insurers from insurers_insurances where id_insurances = ?" ,[$id_insurances]);
    }
 }
    

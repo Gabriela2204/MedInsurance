@@ -4,21 +4,21 @@ namespace App\Repository;
 
 class Services extends BaseRepository
 {
-    public function searchId(string $name): array
+    public function getIdByName(string $name): array
     {
-        return $this->queryAndFetch("SELECT id from services where name ="."'".$name."'");
+        return $this->queryAndFetch("SELECT id FROM services WHERE name = ?",[$name]);
     }
 
-    public function searchPrice(string $name): array
+    public function getPriceByName(string $name): array
     {
-        return $this->queryAndFetch("SELECT price from services where name ="."'".$name."'");
+        return $this->queryAndFetch("SELECT price FROM services WHERE name = ?",[$name]);
     }
 
-    public function getServicesDetails(int $id_insurances): array
+    public function getServicesDetailsByIdInsurances(int $id_insurances): array
     {
-        return $this->queryAndFetch("select services.name, service_insurances.price from services 
-        inner join service_insurances on services.id = service_insurances.id_service
-        where service_insurances.id_insurances =".$id_insurances);
+        return $this->queryAndFetch("SELECT services.name, service_insurances.price FROM services 
+        INNER JOIN service_insurances ON services.id = service_insurances.id_service
+        WHERE service_insurances.id_insurances = ?",[$id_insurances]);
     }
 }
 

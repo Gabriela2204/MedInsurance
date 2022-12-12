@@ -22,11 +22,12 @@ class View
     echo $twig->render('AddNewCustomer.twig', $errors);
   }
 
-  public function AddNewInsurance(array $names, array $types, array $error=null)
+  public function AddNewInsurance(array $names, array $types,array $customers, array $error=null)
   {
     $data = array("Names" =>$names);
     $data['Errors'] = $error;
     $data['Types'] = $types;
+    $data['Customers'] = $customers;
     $loader = new FilesystemLoader(json_decode(file_get_contents('src\Constants.json'), true)['fileSystemLoader']);
     $twig = new \Twig\Environment($loader);
     echo $twig->render('AddNewInsurance.twig',$data);
@@ -40,9 +41,11 @@ class View
     echo $twig->render('CustomerOverview.twig',$data);
   }
    
-  public function ViewDetails(array $data = null)
+  public function ViewDetails(array $data = null, string $error = null)
   {
+    // var_dump($error);die;
     $data = array("Infos" =>$data);
+    $data['Errors'] = $error;
     $loader = new FilesystemLoader(json_decode(file_get_contents('src\Constants.json'), true)['fileSystemLoader']);
     $twig = new \Twig\Environment($loader);
     echo $twig->render('ViewDetails.twig',$data);

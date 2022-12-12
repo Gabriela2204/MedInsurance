@@ -23,14 +23,13 @@
     <div class="form-group">
     <label for="Password">Password</label>
     <input type="password" class="form-control" id="myPassword" name="password_form"  placeholder="Password" value=""/>
+    <input type="password" class="form-control" id="myConfirmPassword" name="confirm_password_form"  placeholder="Confirm Password" value=""/>
     </div>
 
     <div class="form-group">
     <label for="Admin">Admin</label> 
-    <select class="form-control" id="myAdmin" name="admin_form" value=""> 
-        <option>True</option>
-        <option>False</option>
-    </select>   
+    <input type="checkbox" id="myAdmin" name="admin_form" value="True"><label>True</label>
+    <input type="checkbox" id="myAdmin" name="admin_form" value="False"><label>False</label>  
     </div>      
     <input type="submit" class="btn btn-success" id="myAddButton" name="add" value="Add"/>
     </form>

@@ -4,24 +4,24 @@ namespace App\Repository;
 
 class Type extends BaseRepository
 {
-  public function searchId(string $name): array
+  public function getIdByName(string $name): array
   {
-    return $this->queryAndFetch("SELECT id from type where name ="."'".$name."'");
+    return $this->queryAndFetch("SELECT id FROM type WHERE name = ?",[$name]);
   }
     
   public function getNames(): array
   {
-    return $this->queryAndFetch("SELECT name FROM  type where name != 'Basic' ");
+    return $this->queryAndFetch("SELECT name FROM type WHERE name != 'Basic' ");
   }
 
   public function getType(int $id_insurances)
   {
-    return $this->queryAndFetch("Select type.name from type inner join insurances on type.id = insurances.id_type where insurances.id like '".$id_insurances."'");
+    return $this->queryAndFetchForOne("SELECT type.name FROM type INNER JOIN insurances ON type.id = insurances.id_type WHERE insurances.id LIKE ?",[$id_insurances]);
   }
 
   public function getMultiple(string $type)
   {
-    return $this->queryAndFetch("select multiple, id from type where name = '".$type."'");
+    return $this->queryAndFetchForOne("SELECT multiple, id FROM type WHERE name = ?",[$type]);
   }
 }
 

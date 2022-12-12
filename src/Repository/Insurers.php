@@ -4,23 +4,23 @@
 
 class Insurers extends BaseRepository
 {
-    public function getServices(string $name): array
+    public function getServicesByInsurerName(string $name): array
     {
-        $id = $this->queryAndFetch("SELECT id from insurers where name = "."'".$name."'");
-        $services = $this->queryAndFetch(" SELECT  services.name from services
-        inner join insurers_services on services.id = insurers_services.id_services
-        where insurers_services.id_insurers = ".$id[0]->id);
+        $id = $this->queryAndFetchForOne("SELECT id FROM insurers WHERE name = ? ",[$name]);
+        $services = $this->queryAndFetch(" SELECT  services.name FROM services
+        INNER JOIN insurers_services ON services.id = insurers_services.id_services
+        WHERE insurers_services.id_insurers = ?",[$id->id]);
         return $services;
     }
 
-    public function getName(int $idInsurer): array
+    public function getNameByInsurerId(int $idInsurer): array
     {
-        return $this->queryAndFetch("SELECT name FROM  insurers where id = '".$idInsurer."'");
+        return $this->queryAndFetch("SELECT name FROM  insurers WHERE id = ?",[$idInsurer]);
     }
 
-    public function getIdInsurer(string $name): ?array
+    public function getIdInsurerByInsurer(string $name): ?array
     {
-        return $this->queryAndFetch("SELECT id from insurers where name = "."'".$name."'");
+        return $this->queryAndFetch("SELECT id FROM insurers WHERE name = ?",[$name]);
     }
 
 }

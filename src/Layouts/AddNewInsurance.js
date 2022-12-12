@@ -8,6 +8,7 @@ selectElement.addEventListener('change', (event) => {
       type: 'get',
       url: 'index.php?controller=Insurance&action=insurerServices',
       data: {name_insurer: event.target.value},
+      // dataType: 'json',
       success: function(response) {
         $('#checkbox').empty();
         $.each(JSON.parse(response), function(i, record) { 

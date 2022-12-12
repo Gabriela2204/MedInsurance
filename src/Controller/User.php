@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Controller\BaseController;
-use App\Entity\User as EntityUser;
-use App\Repository\Insurances;
-use App\Repository\User as RepositoryUser;
+use App\Entity\User as UserEntity;
+use App\Repository\Insurances as InsurancesRepo;
+use App\Repository\User as UserRepo;
 use App\Views\View;
 use App\Validater;
 
@@ -14,8 +14,8 @@ class User extends BaseController
 
   public function verifyEmail()
   {
-    $userRepo = new RepositoryUser();
-    if ($userRepo->searchEmail($this->request->getValue('email_form'))[0] ->number != 0) {
+    $userRepo = new UserRepo();
+    if ($userRepo->verifyEmail($this->request->getValue('email_form'))[0]->number != 0) {
       return array("Email is already registered");
     }
   }
@@ -30,25 +30,29 @@ class User extends BaseController
   }
   public function add()
   {
+      $error = array();
       if ($this->request->getRequestMethod() == 'POST' && $this->request->getValue('add')) {
         if ($this->verifyEmail() != []) {
           return $this->verifyEmail();
+        }
+        if($this->request->getValue('confirm_password_form') != $this->request->getValue('password_form')) {
+          array_push($error ,"Passwords don't match");
+          return $error;
         }
         $admin = $this->adminOption();
         $password = $this->request->getValue('password_form');
         if ($this->request->getValue('password_form') != null) {
           $password = password_hash($this->request->getValue('password_form'), PASSWORD_DEFAULT);
         }
-        $email = $this->session->getValue('email');
-        $repo = new Insurances();
-        $user = new EntityUser( $this->request->getValue('email_form'), $password,$repo->getIdInsurer($email)[0]->id_insurer,$this->request->getValue('name_form'), $admin);
+        $idInsurer = $this->session->getValue('user')->id_insurer;
+        $user = new UserEntity( $this->request->getValue('email_form'), $password,$idInsurer,$this->request->getValue('name_form'), $admin);
         $valid = new Validater();
         if ($valid->validate($user) == null) {
-          $repo = new RepositoryUser();
-          $repo->insert($user);
+          $userRepo = new UserRepo();
+          $userRepo->insert($user);
         }
-          $error = $valid->validate($user);
-          return $error;
+          $error1 = $valid->validate($user);
+          return $error1;
       }
 
   }
@@ -56,20 +60,16 @@ class User extends BaseController
   public function addNewUser()
   {
     $this->verifySession();
-    $error = array();
     $view = new View();
-    $email = $this->session->getValue('email');
-    $repo = new Insurances();
-    if ($repo->getAdmin($email)[0]->is_admin == 0) {
+    $admin = $this->session->getValue('user')->is_admin;
+    if ($admin == 0) {
       array_push($error ,"You can not add a new user because you are not an admin.");
-      $view->AddNewUser($error,$repo->getAdmin($email)[0]->is_admin);
+      $view->AddNewUser($error,$admin);
     } else {
-      $view->AddNewUser($this->add());
+
+          $view->AddNewUser($this->add());
+      }
     }
-
-   
-
-  }
 }
 
 ?>
