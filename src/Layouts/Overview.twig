@@ -1,0 +1,39 @@
+{% extends 'BaseLayout.twig' %}
+
+{% block title %}
+    Insurances
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="src/Layouts/Overview.css">
+
+    <form name="search_form" method="POST">
+    <input type="text" id="myInput" name="search_box"  placeholder="Search" value=""/>
+    <input type="submit" id="mySearchButton" name="search" value="Search"/>
+    <input type="submit" id="myResetButton"  name="reset" value="Reset"  />
+    </form>
+
+        <table id="Overview" class ="table">
+            <tr class="table-success">        
+                <th scope="col">ID</th>
+                <th scope="col" >Status</th>
+                <th scope="col" >Start_time</th>  
+                <th scope="col" >Type</th> 
+                <th scope="col" >Customer</th>  
+            </tr>
+ 
+        {% for info in Infos %}
+       
+            <tr>
+                <td>{{ info.ID }}</td>
+                <td>{{ info.status}}</td>
+                <td>{{ info.start_time |date('Y-m-d H:i:s')}}</td>
+                <td>{{ info.Type}}</td>
+                <td>{{ info.Client}}</td>
+
+            </tr>
+        {% endfor %}
+        </table>
+{% endblock %}
+

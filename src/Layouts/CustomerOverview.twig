@@ -1,0 +1,34 @@
+{% extends 'BaseLayout.twig' %}
+{% block title %}
+    Customers
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="src/Layouts/Overview.css">
+<form name="search_form" method="POST">
+    <input type="text" id="myInput" name="search_box"  placeholder="Search" value=""/>
+    <input type="submit" id="mySearchButton" name="search" value="Search"/>
+    <input type="submit" id="myResetButton"  name="reset" value="Reset"  />
+    </form>
+
+        <table id="Overview" class ="table">
+            <tr class="table-success">        
+                <th scope="col">ID</th>
+                <th scope="col" >Customer Name</th>
+                <th scope="col" >Customer Address</th>   
+                <th scope="col" >Details</th> 
+            </tr>
+ 
+        {% for info in Infos %}
+       
+            <tr>
+                <td>{{ info.id }}</td>
+                <td>{{ info.name}}</td>
+                <td>{{ info.adress}}</td>
+                <td><a href="index.php?controller=Customer&action=ViewDetails&id={{ info.id }}" class="btn btn-outline-success"> View Details </a></td>
+
+            </tr>
+        {% endfor %}
+        </table>
+
+{% endblock %}

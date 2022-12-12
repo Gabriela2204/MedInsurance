@@ -1,0 +1,68 @@
+{% extends 'BaseLayout.twig' %}
+
+{% block javascript %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
+<script src="src/Layouts/AddNewInsurance.js" defer></script>
+{% endblock %}
+
+
+{% block title %}
+    Add New Insurance
+{% endblock %}
+
+{% block content %}
+
+
+<div class="card"  style="width: 21rem; position: relative; left: 40%; top: 30%;">
+    <div class="card-body"> 
+    <div class="form-group">
+      <form name="add_form" id="add_form" method="post">
+        
+      <div class="form-group">
+          <label for="Customer">Customer Name:
+          <select  name="customer_form" value="customer_form" >
+            <option>Select Customer</option>
+              {% for customer in Customers %}
+                <option value={{customer.name}} >{{ customer.name }}</option>
+              {% endfor %}
+          </select>
+        </label>
+       
+          <!-- <input type="text" class="form-control" id="myCustomer" name="customer_form"  placeholder="Customer" value=""/> -->
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="type">Choose a type:
+        <select class="type_form" name="type_form" value="type_form" >
+          <option>Select type</option>
+            {% for type in Types %}
+              <option value={{type.name}} >{{ type.name }}</option>
+            {% endfor %}
+        </select>
+      </label>  
+      <br><br>
+      </div>
+      <label for="insurer">Choose an insurer:
+      <select class="name_insurer" name="name_insurer" value="name_insurer" >
+        <option>Select insurer</option>
+          {% for name in Names %}
+            <option value={{name.name}} >{{ name.name }}</option>
+          {% endfor %}
+      </select>
+    </label>   
+
+    <div id="checkbox"></div>
+    <br>
+    {% if (Errors != []) %}
+    {% for error in Errors %}
+    <label>{{ error}} </label><br>
+    {% endfor %}
+    {% endif %}
+    <br>
+    <input type="submit" class="btn btn-success" id="myAddButton" name="add" value="add"/>
+  </form>
+ 
+</div>
+</div>
+       
+{% endblock %}

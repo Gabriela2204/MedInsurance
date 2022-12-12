@@ -21,6 +21,10 @@ class ComposerStaticInit32c843b300568eed4628a3b0db6c1234
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
         ),
+        'A' => 
+        array (
+            'App\\' => 4,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -36,9 +40,20 @@ class ComposerStaticInit32c843b300568eed4628a3b0db6c1234
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
+        'App\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
     );
 
     public static $classMap = array (
+        'App\\Controller\\Insurance' => __DIR__ . '/../..' . '/src/Controller/Insurance.php',
+        'App\\DatabaseConnection' => __DIR__ . '/../..' . '/src/DatabaseConnection.php',
+        'App\\Entity\\Insurances' => __DIR__ . '/../..' . '/src/Entity/Insurances.php',
+        'App\\Repository\\AbstractRepository' => __DIR__ . '/../..' . '/src/Repository/AbstractRepository.php',
+        'App\\Repository\\BaseRepository' => __DIR__ . '/../..' . '/src/Repository/BaseRepository.php',
+        'App\\Repository\\Insurance' => __DIR__ . '/../..' . '/src/Repository/Insurance.php',
+        'App\\Views\\View' => __DIR__ . '/../..' . '/src/Views/View.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Symfony\\Polyfill\\Ctype\\Ctype' => __DIR__ . '/..' . '/symfony/polyfill-ctype/Ctype.php',
         'Symfony\\Polyfill\\Mbstring\\Mbstring' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/Mbstring.php',

@@ -6,6 +6,13 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Controller\\Insurance' => $baseDir . '/src/Controller/Insurance.php',
+    'App\\DatabaseConnection' => $baseDir . '/src/DatabaseConnection.php',
+    'App\\Entity\\Insurances' => $baseDir . '/src/Entity/Insurances.php',
+    'App\\Repository\\AbstractRepository' => $baseDir . '/src/Repository/AbstractRepository.php',
+    'App\\Repository\\BaseRepository' => $baseDir . '/src/Repository/BaseRepository.php',
+    'App\\Repository\\Insurance' => $baseDir . '/src/Repository/Insurance.php',
+    'App\\Views\\View' => $baseDir . '/src/Views/View.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Symfony\\Polyfill\\Ctype\\Ctype' => $vendorDir . '/symfony/polyfill-ctype/Ctype.php',
     'Symfony\\Polyfill\\Mbstring\\Mbstring' => $vendorDir . '/symfony/polyfill-mbstring/Mbstring.php',

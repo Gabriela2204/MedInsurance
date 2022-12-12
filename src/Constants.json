@@ -1,0 +1,8 @@
+{"localhost":"localhost" ,
+  "user":"root" ,
+  "pass":"parolamea123" ,
+  "dbname":"medinsurance",
+  "fileSystemLoader":"src\\Layouts",
+  "mainPage" :"index.php?controller=Insurance&action=overview",
+  "loginPage" : "index.php?controller=Login&action=login"
+}

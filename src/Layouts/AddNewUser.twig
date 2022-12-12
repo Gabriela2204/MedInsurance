@@ -1,0 +1,44 @@
+{% extends 'BaseLayout.twig' %}
+
+{% block title %}
+    Add New User
+{% endblock %}
+
+{% block content %}
+
+<div class="card"  style="width: 21rem; position: relative; left: 40%; top: 30%;">
+    <div class="card-body">
+    {% if Admin == [] %} 
+    <form name="add_form" id="add_form" method="POST">   
+    <div class="form-group">
+    <label for="Name">Name</label>
+    <input type="text" class="form-control" id="myName" name="name_form"  placeholder="Name" value=""/>
+    </div>
+
+    <div class="form-group">
+    <label for="Email">Email</label>
+    <input type="text" class="form-control" id="myEmail" name="email_form"  placeholder="Email" value=""/>
+    </div>
+
+    <div class="form-group">
+    <label for="Password">Password</label>
+    <input type="password" class="form-control" id="myPassword" name="password_form"  placeholder="Password" value=""/>
+    <input type="password" class="form-control" id="myConfirmPassword" name="confirm_password_form"  placeholder="Confirm Password" value=""/>
+    </div>
+
+    <div class="form-group">
+    <label for="Admin">Admin</label> 
+    <input type="checkbox" id="myAdmin" name="admin_form" value="True"><label>True</label>
+    <input type="checkbox" id="myAdmin" name="admin_form" value="False"><label>False</label>  
+    </div>      
+    <input type="submit" class="btn btn-success" id="myAddButton" name="add" value="Add"/>
+    </form>
+    {% endif %}
+    {% for error in Errors %}
+    <label>{{ error }} </label><br>
+    {% endfor %}
+    </div>
+
+</div>
+       
+{% endblock %}
